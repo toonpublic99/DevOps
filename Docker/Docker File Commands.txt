@@ -1,0 +1,69 @@
+>> คำสั่ง FROM
+กำหนด Base Image
+
+>> คำสั่ง LABEL
+กำหนด Meta Data เช่น ชื่อ Version หรือ ชื่อเจ้าของ Image
+
+>> คำสั่ง ENV 
+กำหนด Environment Variable ภายใน Container
+
+>> คำสั่ง RUN
+สำหรับติดตั้ง Packages ให้ Container
+
+>> คำสั่ง COPY
+สำหรับคัดลอก File และ Folder ไปยัง Container
+
+>> คำสั่ง ADD
+สำหรับคัดลอก File และ Folder ไปยัง Container โดยสามารถ Extract (แตกไฟล์) .tar และคัดลอกจาก Host ภายนอกได้
+
+หมายเหตุ: คำสั่ง ADD จะทำได้มากกว่า COPY
+
+>> คำสั่ง WORKDIR 
+กำหนด Working Directory ของ Container
+
+>> คำสั่ง ARG
+กำหนด Variable ขณะสร้าง Image
+
+-------------------------------
+ใน Dockerfile จะมีคำสั่งสองคำสั่งที่ทำงานคล้ายกันมากคือ CMD และ ENTRYPOINT ซึ่งโดยวิธีใช้ทั้งสองอันจะเป็นการเรียกชุดคำสั่ง (command หรือ executables) สุดท้ายก่อนที่ docker จะสร้าง container ขึ้นมา
+
+
+>> คำสั่ง CMD
+
+>> คำสั่ง ENTRYPOINT 
+
+>> Syntax
+CMD executable arg1 arg2
+ENTRYPOINT executable arg1 arg2
+
+
+>> Example ของ CMD
+FROM debian:jessie-slim
+
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends \
+  cowsay \
+  screenfetch && \
+  rm -rf /var/lib/apt/lists/*
+
+ENV PATH "$PATH:/usr/games"
+CMD ["cowsay", "Yo, CMD !!"]
+
+>> Example ของ ENTRYPOINT
+FROM debian:jessie-slim
+
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends \
+  cowsay \
+  screenfetch && \
+  rm -rf /var/lib/apt/lists/*
+
+ENV PATH "$PATH:/usr/games"
+ENTRYPOINT ["cowsay", "Yo, Entrypoint!!"]
+--------------------------------
+
+>> คำสั่ง EXPOSE
+กำหนด Port ที่เปิดให้ Container ตัวอื่นติดต่อเข้ามา
+
+>> คำสั่ง VOLUME
+สร้าง Folder เพื่อเก็บข้อมูลแบบถาวรให้ Container
